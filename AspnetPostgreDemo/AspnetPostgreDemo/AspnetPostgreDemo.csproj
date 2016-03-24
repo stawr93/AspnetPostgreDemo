@@ -139,6 +139,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\BookStoreContext.cs" />
     <Compile Include="Data\Models\Author.cs" />
@@ -187,6 +188,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Authors\Create.cshtml" />
+    <Content Include="Views\Authors\Delete.cshtml" />
+    <Content Include="Views\Authors\Details.cshtml" />
+    <Content Include="Views\Authors\Edit.cshtml" />
+    <Content Include="Views\Authors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
