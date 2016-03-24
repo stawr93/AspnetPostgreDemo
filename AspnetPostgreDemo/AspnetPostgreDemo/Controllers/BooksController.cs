@@ -7,6 +7,10 @@ using AspnetPostgreDemo.Data.Models;
 
 namespace AspnetPostgreDemo.Controllers
 {
+    /// <summary>
+    /// Контроллер для работы с книгами.
+    /// Все методы аналогичны AuthorsController.
+    /// </summary>
     public class BooksController : Controller
     {
         private readonly BookStoreContext _bookStoreContext = new BookStoreContext();
@@ -39,8 +43,6 @@ namespace AspnetPostgreDemo.Controllers
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,PictureUrl,Description,Price")] Book book)
@@ -71,8 +73,6 @@ namespace AspnetPostgreDemo.Controllers
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,PictureUrl,Description,Price")] Book book)
@@ -106,7 +106,7 @@ namespace AspnetPostgreDemo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Book book = _bookStoreContext.Books.Find(id);
+            var book = _bookStoreContext.Books.Find(id);
             _bookStoreContext.Books.Remove(book);
             _bookStoreContext.SaveChanges();
             return RedirectToAction("Index");
