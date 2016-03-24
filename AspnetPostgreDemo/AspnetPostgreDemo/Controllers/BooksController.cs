@@ -9,12 +9,12 @@ namespace AspnetPostgreDemo.Controllers
 {
     public class BooksController : Controller
     {
-        private BookStoreContext db = new BookStoreContext();
+        private readonly BookStoreContext _bookStoreContext = new BookStoreContext();
 
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            return View(_bookStoreContext.Books.ToList());
         }
 
         // GET: Books/Details/5
@@ -24,7 +24,7 @@ namespace AspnetPostgreDemo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            var book = _bookStoreContext.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -47,8 +47,8 @@ namespace AspnetPostgreDemo.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
-                db.SaveChanges();
+                _bookStoreContext.Books.Add(book);
+                _bookStoreContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -62,7 +62,7 @@ namespace AspnetPostgreDemo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            var book = _bookStoreContext.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -79,8 +79,8 @@ namespace AspnetPostgreDemo.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                _bookStoreContext.Entry(book).State = EntityState.Modified;
+                _bookStoreContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(book);
@@ -93,7 +93,7 @@ namespace AspnetPostgreDemo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            var book = _bookStoreContext.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -106,9 +106,9 @@ namespace AspnetPostgreDemo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
-            db.SaveChanges();
+            Book book = _bookStoreContext.Books.Find(id);
+            _bookStoreContext.Books.Remove(book);
+            _bookStoreContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -116,7 +116,7 @@ namespace AspnetPostgreDemo.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _bookStoreContext.Dispose();
             }
             base.Dispose(disposing);
         }
