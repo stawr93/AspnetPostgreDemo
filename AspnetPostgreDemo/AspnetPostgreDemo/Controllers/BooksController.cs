@@ -20,7 +20,10 @@ namespace AspnetPostgreDemo.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(_bookStoreContext.Books.ToList());
+            var books = _bookStoreContext.Books
+                .Include(book => book.Author)
+                .ToList();
+            return View(books);
         }
 
         // GET: Books/Details/5
@@ -30,7 +33,10 @@ namespace AspnetPostgreDemo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var book = _bookStoreContext.Books.Find(id);
+            var book = _bookStoreContext.Books
+                .Include(b => b.Author)
+                .SingleOrDefault(b => b.Id == id);
+
             if (book == null)
             {
                 return HttpNotFound();
