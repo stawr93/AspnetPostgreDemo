@@ -1,6 +1,7 @@
 ﻿namespace AspnetPostgreDemo.Data.Models
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// Сущность "Книга".
@@ -21,7 +22,13 @@
         /// <summary>
         /// Автор книги.
         /// </summary>
+        [ForeignKey(nameof(Author_Id))]
         public Author Author { get; set; }
+
+        /// <summary>
+        /// Идентификатор автора книги.
+        /// </summary>
+        public long Author_Id { get; set; }
 
         /// <summary>
         /// Описание книги.

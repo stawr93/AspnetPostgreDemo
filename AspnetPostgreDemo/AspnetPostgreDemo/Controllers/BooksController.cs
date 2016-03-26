@@ -7,6 +7,8 @@ using AspnetPostgreDemo.Data.Models;
 
 namespace AspnetPostgreDemo.Controllers
 {
+    using ViewModel;
+
     /// <summary>
     /// Контроллер для работы с книгами.
     /// Все методы аналогичны AuthorsController.
@@ -39,22 +41,26 @@ namespace AspnetPostgreDemo.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            return View();
+            var authors = _bookStoreContext.Authors.ToList();
+            var viewModel = new CreateEditBookViewModel(authors);
+
+            return View(viewModel);
         }
 
         // POST: Books/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,PictureUrl,Description,Price")] Book book)
+        public ActionResult Create(CreateEditBookViewModel bookViewModel)
         {
             if (ModelState.IsValid)
             {
+                var book = CreateBook(bookViewModel);
                 _bookStoreContext.Books.Add(book);
                 _bookStoreContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(book);
+            return View(bookViewModel);
         }
 
         // GET: Books/Edit/5
@@ -69,21 +75,32 @@ namespace AspnetPostgreDemo.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+            var authors = _bookStoreContext.Authors.ToList();
+            var viewMobel = new CreateEditBookViewModel(book, authors);
+            return View(viewMobel);
         }
 
         // POST: Books/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,PictureUrl,Description,Price")] Book book)
+        public ActionResult Edit(CreateEditBookViewModel bookViewModel)
         {
             if (ModelState.IsValid)
             {
+                var book = _bookStoreContext.Books.Find(bookViewModel.Id);
+                if (book == null)
+                {
+                    return HttpNotFound();
+                }
+                UpdateBook(book, bookViewModel);
                 _bookStoreContext.Entry(book).State = EntityState.Modified;
                 _bookStoreContext.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(book);
+
+            var authors = _bookStoreContext.Authors.ToList();
+            bookViewModel.Authors = CreateEditBookViewModel.BuildAuthorsList(authors);
+            return View(bookViewModel);
         }
 
         // GET: Books/Delete/5
@@ -119,6 +136,30 @@ namespace AspnetPostgreDemo.Controllers
                 _bookStoreContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private static Book CreateBook(CreateEditBookViewModel viewModel)
+        {
+            var book = new Book
+            {
+                Title = viewModel.Title,
+                Description = viewModel.Description,
+                PictureUrl = viewModel.PictureUrl,
+                Price = viewModel.Price,
+                Author_Id = viewModel.AuthorId
+            };
+            return book;
+        }
+
+        private static Book UpdateBook(Book bookForUpdating, CreateEditBookViewModel viewModel)
+        {
+            bookForUpdating.Author_Id = viewModel.AuthorId;
+            bookForUpdating.Title = viewModel.Title;
+            bookForUpdating.Description = viewModel.Description;
+            bookForUpdating.PictureUrl = viewModel.PictureUrl;
+            bookForUpdating.Price = viewModel.Price;
+            bookForUpdating.Price = viewModel.Price;
+            return bookForUpdating;;
         }
     }
 }
