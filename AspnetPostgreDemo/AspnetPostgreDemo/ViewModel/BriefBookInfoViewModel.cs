@@ -20,6 +20,8 @@
         public BriefBookInfoViewModel(Book book) : base(book)
         {
             BriefAuthor = new BriefAuthorViewModel(book.Author);
+            Id = book.Id;
         }
+        public long Id { get; set; }
     }
 }

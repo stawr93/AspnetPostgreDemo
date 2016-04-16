@@ -14,14 +14,18 @@
     /// </summary>
     public class BriefAuthorViewModel
     {
+        public string FullName;
+           
+
         /// <summary>
         /// Конструктор модели из сущности предметной области.
         /// </summary>
         /// <param name="author">Автор, информацию о котором нужно представить пользователю.</param>
         public BriefAuthorViewModel(Author author)
         {
-            throw new NotImplementedException();
+            FullName = $"{author.FirstName} {author.LastName}";
         }
+
 
         /// <summary>
         /// Базовый конструктор без параметров. Для служебных целей.

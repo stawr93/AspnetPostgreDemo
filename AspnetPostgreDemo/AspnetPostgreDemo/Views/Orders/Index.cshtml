@@ -1,0 +1,30 @@
+﻿@model List<AspnetPostgreDemo.ViewModel.OrderModel>
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    }
+
+    <h2>Index</h2>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(x => item.orderId)
+            </th>
+            <th>
+                   @foreach (var bookId in item.books)
+                   {
+                       @Html.DisplayFor(x => bookId)
+                       <br/>
+                   }
+            </th>
+            <th></th>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Create New", "NewOrder")

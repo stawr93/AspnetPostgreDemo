@@ -1,5 +1,6 @@
 ﻿namespace AspnetPostgreDemo.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -41,5 +42,7 @@
         /// </summary>
         [DisplayName("Цена")]
         public decimal Price { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

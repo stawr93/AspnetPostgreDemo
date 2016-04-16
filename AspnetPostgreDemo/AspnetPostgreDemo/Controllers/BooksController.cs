@@ -23,7 +23,7 @@ namespace AspnetPostgreDemo.Controllers
             var books = _bookStoreContext.Books
                 .Include(book => book.Author)
                 .ToList();
-            return View(books);
+            return View(books.Select(book => new BriefBookInfoViewModel(book)));
         }
 
         // GET: Books/Details/5
@@ -166,6 +166,18 @@ namespace AspnetPostgreDemo.Controllers
             bookForUpdating.Price = viewModel.Price;
             bookForUpdating.Price = viewModel.Price;
             return bookForUpdating;;
+        }
+
+        public ActionResult KUPIKNIGU(long id)
+        {
+            var book = _bookStoreContext.Books.Find(id);
+            var order = _bookStoreContext.Orders.ToList().LastOrDefault();
+            order.Books.Add(book);
+           
+            _bookStoreContext.SaveChanges();
+
+
+            return RedirectToAction("Details", new {id=id});
         }
     }
 }

@@ -19,5 +19,26 @@
         /// Коллекция авторов, которая хранится в БД. Соответствует таблице "Authors".
         /// </summary>
         public DbSet<Author> Authors { get; set; }
+
+        public DbSet<Order> Orders { get; set; } 
+
+
+        public BookStoreContext()
+        {
+            Configuration.LazyLoadingEnabled = true;
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .HasMany<Book>(order => order.Books)
+                .WithMany(book => book.Orders)
+                .Map(orderToBook =>
+                {
+                    orderToBook.MapLeftKey("OrderId");
+                    orderToBook.MapRightKey("BookId");
+                    orderToBook.ToTable("OrderBooks");
+                });
+        }
     }
 }

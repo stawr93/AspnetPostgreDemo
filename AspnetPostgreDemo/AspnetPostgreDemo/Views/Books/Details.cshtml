@@ -1,5 +1,7 @@
 ﻿@model AspnetPostgreDemo.Data.Models.Book
 
+
+
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,14 +22,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PictureUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PictureUrl)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
@@ -42,10 +36,42 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PictureUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PictureUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author.Biography)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.Biography)
+        </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("KUPIKNIGU", "KUPIKNIGU", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
